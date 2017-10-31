@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:dannych/sabre.git"
+  },
   "scripts": {
     "deploy": "now --dotenv=.env.production --public",
     "start": "node scripts/release",
