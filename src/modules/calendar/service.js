@@ -6,9 +6,6 @@ const getYesterdayDate = () => getTodayDate().subtract(1, 'days');
 
 const isTodayWeekend = () => {
     let isoWeekday = getTodayDate().isoWeekday();
-
-    console.log(getTodayDate().format());
-    console.log(isoWeekday);
     return isoWeekday === 6 || isoWeekday === 7;
 }
 
@@ -17,6 +14,7 @@ const isTodayHoliday = (calendarRepository) => {
 }
 
 module.exports = (calendarRepository) => ({
+    now: () => moment().utcOffset(7),
     getTodayDate,
     getYesterdayDate,
     isTodayWeekend,
