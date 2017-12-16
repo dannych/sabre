@@ -4,7 +4,8 @@ const apiBaseUrl = process.env.API_URL;
 const api = require('./modules/api')(apiBaseUrl);
 
 const token = process.env.SLACK_TOKEN;
-const slackService = require('./modules/slack/service')(token);
+const slackRepo = require('./modules/slack/repository')(token, api);
+const slackService = require('./modules/slack/service')(slackRepo);
 
 const calendarRepo = require('./modules/calendar/repository')(api);
 const calendarService = require('./modules/calendar/service')(calendarRepo);
@@ -17,14 +18,14 @@ const shuffleCtrl = require('./modules/shuffle/controller')(shuffleRepo, calenda
 
 const dateFormat = 'YYYY-MM-DD HH:mm (dddd)';
 
-slackService.hears('release', (bot, message) => {
+slackService.listen('release', (bot, message) => {
     eventService.getTodayRemainingEvents()
         .then((getTodayRemainingEvents) => {
             bot.reply(message, getTodayRemainingEvents.length ? 'There are still ongoing events' : 'You can release today');
         });
 });
 
-slackService.hears('shuffle', (bot, message) => {
+slackService.listen('shuffle', (bot, message) => {
     Promise
         .all([
             slackService.getTeamMembers(),
