@@ -1,6 +1,6 @@
 const moment = require('moment');
 
-const shuffleCtrlFactory = require('./controller');
+const shuffleServiceFactory = require('./service');
 
 describe('Shuffle Controller', () => {
 
@@ -331,7 +331,7 @@ describe('Shuffle Controller', () => {
         
             getShuffle = jest.fn();
 
-            shuffleCtrl = shuffleCtrlFactory({
+            shuffleCtrl = shuffleServiceFactory({
                 getShuffle,
                 createShuffle: (x, y) => Promise.resolve(y)
             }, {

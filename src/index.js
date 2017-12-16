@@ -14,7 +14,7 @@ const eventRepo = require('./modules/event/repository')(api);
 const eventService = require('./modules/event/service')(eventRepo, calendarService);
 
 const shuffleRepo = require('./modules/shuffle/repository')(api);
-const shuffleCtrl = require('./modules/shuffle/controller')(shuffleRepo, calendarService, slackService);
+const shuffleService = require('./modules/shuffle/service')(shuffleRepo, calendarService, slackService);
 
 const dateFormat = 'YYYY-MM-DD HH:mm (dddd)';
 
@@ -29,7 +29,7 @@ slackService.listen('shuffle', (bot, message) => {
     Promise
         .all([
             slackService.getTeamMembers(),
-            shuffleCtrl.getTodayShuffle()
+            shuffleService.getTodayShuffle()
         ])
         .then(([members, shuffle]) => {
             let memberDetail = members.find((x) => x.name === shuffle.current);
