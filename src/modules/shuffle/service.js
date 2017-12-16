@@ -27,7 +27,7 @@ const getTodayShuffle = async (shuffleRepo, calendarService, teamService) => {
     let mergedSelected = [...latestShuffle.selected, latestShuffle.current].filter((x) => x);
 
     let isWeekend = calendarService.isTodayWeekend();
-    let isHoliday = calendarService.isTodayHoliday();
+    let isHoliday = await calendarService.isTodayHoliday();
     if (isWeekend || isHoliday) {
         return await shuffleRepo.createShuffle(today, {
             current: null,

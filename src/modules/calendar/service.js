@@ -9,8 +9,12 @@ const isTodayWeekend = () => {
     return isoWeekday === 6 || isoWeekday === 7;
 }
 
-const isTodayHoliday = (calendarRepository) => {
-    return false;
+const isTodayHoliday = async (calendarRepository) => {
+    let today = getTodayDate();
+    let holidays = await calendarRepository.getHolidayDates();
+    return !!holidays
+        .filter((date) => date.isSame(today, 'day'))
+        .length;
 }
 
 module.exports = (calendarRepository) => ({

@@ -3,15 +3,17 @@ const moment = require('moment');
 
 const dateKey = 'YYYY-MM-DD';
 
-const addHoliday = (api, date) => {
-    return api.put('/holidays' + moment(date).format()); // todo add array
+const addHolidayDate = (api, date, title) => {
+    return api.put('/holidays/' + moment(date).format(), { title: title || 'holiday' });
 };
 
-const getHolidays = (api) => {
-    return api.get('/holidays');
+const getHolidayDates = (api) => {
+    return api.get('/holidays.json')
+        .then((res) => res || {})
+        .then((res) => Object.keys(res).map((date) => moment(date, dateKey)));
 };
 
 module.exports = (api) => ({
-    addHoliday: _.partial(addHoliday, api),
-    getHolidays: _.partial(getHolidays, api)
+    addHolidayDate: _.partial(addHolidayDate, api),
+    getHolidayDates: _.partial(getHolidayDates, api)
 });
