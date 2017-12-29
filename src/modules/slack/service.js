@@ -7,7 +7,7 @@ const getAvailableTeamMembers = (slackRepository) => {
 };
 
 const getTeamMemberNames = (slackRepository) => {
-    return getAvailableTeamMembers(slackRepository)
+    return getTeamMembers(slackRepository)
         .then((members) => members.map((member) => member.name));
 }
 
